@@ -1,0 +1,158 @@
+@import "node_modules/normalize-scss/sass/normalize/import-now";
+
+$lightColor: #ebf5f5;
+$buttonMainColor: #18c0c1;
+$mainFontColor: #111835ff;
+$cardsBgColor: #c9d5e5;
+$mainBgColor: #546a82;
+
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  height: 100%;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  color: $mainFontColor;
+}
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 0 auto;
+  background-color: $mainBgColor;
+}
+.container {
+  max-width: 1230px;
+  margin: 0 auto;
+  padding: 0px 15px;
+}
+
+.button {
+  border-radius: 5px;
+  border: none;
+  color: $lightColor;
+  padding: 10px;
+  background-color: $buttonMainColor;
+  text-align: center;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #139b9b;
+  }
+  &:active {
+    background-color: #0d6d6d;
+  }
+}
+
+.user-form {
+  padding-top: 50px;
+  width: 100%;
+
+  &__input {
+    width: 100%;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 10px;
+    color: $mainFontColor;
+
+    &:focus-within {
+      outline: none;
+      background-color: rgb(178, 237, 237);
+    }
+  }
+}
+
+.user-cards {
+  padding: 20px 0 50px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: minmax(300px, auto);
+  gap: 10px;
+}
+
+.error {
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: 0.1rem;
+  text-align: center;
+  grid-column: 1/-1;
+}
+
+.card {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: $cardsBgColor;
+  box-shadow: 0px 0px 10px $cardsBgColor;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  transition: transform 0.3s;
+
+  &__user-avatar-wrapper {
+    max-height: 50%;
+  }
+  &__user-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  &__user-name {
+    font-weight: 800;
+    word-break: break-word;
+  }
+  &__user-bio {
+    word-break: break-word;
+  }
+
+  &:hover {
+    transform: scale(110%);
+    box-shadow: 0px 0px 10px $mainBgColor;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .user-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .user-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+  }
+}
