@@ -38,28 +38,28 @@ import { fetchUsers } from "../ts/fetchUsers";
 
   makeUserCards(users, cardsWrapper, getSample);
 
-  // Много повторяющейся логики, хотелось бы универсальную функцию с последующей логикой
-
   input.addEventListener("keyup", function () {
-    if (Number(this.value) > 0) {
-      let inputID: number = Number(this.value);
+    const inputText: string = this.value;
+    if (inputText) {
+      if (Number(this.value) > 0) {
+        console.log("1");
 
-      const filteredUsers = users.filter(
-        (user: { id: string }) => Number(user.id) === inputID
-      );
-      giveSearchResult(filteredUsers, cardsWrapper, getSample);
-    } else {
-      let inputText: string = this.value;
+        let inputID: number = Number(this.value);
 
-      if (inputText) {
+        const filteredUsers = users.filter(
+          (user: { id: number }) => user.id === inputID
+        );
+        giveSearchResult(filteredUsers, cardsWrapper, getSample);
+      } else {
+        console.log("2");
+        const inputText: string = this.value.toLocaleLowerCase();
+
         const filteredUsers = users.filter((user: { username: string }) =>
-          user.username.toLowerCase().match(inputText.toLocaleLowerCase())
+          user.username.toLowerCase().match(inputText)
         );
 
         giveSearchResult(filteredUsers, cardsWrapper, getSample);
-      } else if (!inputText) {
-        makeUserCards(users, cardsWrapper, getSample);
       }
-    }
+    } else makeUserCards(users, cardsWrapper, getSample);
   });
 })();
