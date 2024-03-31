@@ -42,8 +42,6 @@ import { fetchUsers } from "../ts/fetchUsers";
     const inputText: string = this.value;
     if (inputText) {
       if (Number(this.value) > 0) {
-        console.log("1");
-
         let inputID: number = Number(this.value);
 
         const filteredUsers = users.filter(
@@ -51,7 +49,6 @@ import { fetchUsers } from "../ts/fetchUsers";
         );
         giveSearchResult(filteredUsers, cardsWrapper, getSample);
       } else {
-        console.log("2");
         const inputText: string = this.value.toLocaleLowerCase();
 
         const filteredUsers = users.filter((user: { username: string }) =>
