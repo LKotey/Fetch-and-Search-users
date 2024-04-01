@@ -5,7 +5,7 @@ import { fetchUsers } from "../ts/fetchUsers";
 
 (async function main() {
   const cardsWrapper: HTMLElement = document.querySelector("#cards")!;
-  const input: HTMLInputElement = document.querySelector("#input-name")!;
+  const searchInput: HTMLInputElement = document.querySelector("#input-name")!;
 
   const NO_RESULTS_MESSAGE: string = `<p class="error">Unfortunately there are no matches</p>`;
   const ERROR_FETCH_MESSAGE: string = `<p class="error">Something went wrong :( Please, try later </p>`;
@@ -14,7 +14,7 @@ import { fetchUsers } from "../ts/fetchUsers";
   const usersAgeBetween18and25: object[] = [];
   const usersAgeBetween35and50: object[] = [];
 
-  function giveSearchResult(
+  function getSearchResult(
     usersArr: Object[],
     domElement: HTMLElement,
     domElementInnerStructure: Function
@@ -29,17 +29,18 @@ import { fetchUsers } from "../ts/fetchUsers";
   const users = await fetchUsers(USERS_URL, cardsWrapper, ERROR_FETCH_MESSAGE);
 
   users.forEach((user: { age: number }) => {
-    if (user.age > 18 && user.age < 25) {
+    if (user.age > 18 && user.age <= 25) {
       usersAgeBetween18and25.push(user);
-    } else if (user.age > 35 && user.age < 50) {
+    } else if (user.age > 25 && user.age < 50) {
       usersAgeBetween35and50.push(user);
     }
   });
 
   makeUserCards(users, cardsWrapper, getSample);
 
-  input.addEventListener("keyup", function () {
+  searchInput.addEventListener("input", function () {
     const inputText: string = this.value;
+
     if (inputText) {
       if (Number(this.value) > 0) {
         let inputID: number = Number(this.value);
@@ -47,7 +48,7 @@ import { fetchUsers } from "../ts/fetchUsers";
         const filteredUsers = users.filter(
           (user: { id: number }) => user.id === inputID
         );
-        giveSearchResult(filteredUsers, cardsWrapper, getSample);
+        getSearchResult(filteredUsers, cardsWrapper, getSample);
       } else {
         const inputText: string = this.value.toLocaleLowerCase();
 
@@ -55,7 +56,7 @@ import { fetchUsers } from "../ts/fetchUsers";
           user.username.toLowerCase().match(inputText)
         );
 
-        giveSearchResult(filteredUsers, cardsWrapper, getSample);
+        getSearchResult(filteredUsers, cardsWrapper, getSample);
       }
     } else makeUserCards(users, cardsWrapper, getSample);
   });
