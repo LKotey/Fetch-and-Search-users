@@ -1,4 +1,4 @@
-function getSample(user: { username: string; website: string }) {
+function getSample(user: { username: string; website: string }): string {
   return `<li class="card">
      <div class="card__user-avatar-wrapper">
        <img
