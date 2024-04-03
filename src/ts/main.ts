@@ -22,43 +22,44 @@ function getSearchResult(usersArr: object[]): void {
     Variables.cardsWrapper.innerHTML = Variables.NO_RESULTS_MESSAGE;
   }
 }
+(async function () {
+  const users = await fetchUsers(
+    Variables.USERS_URL,
+    Variables.cardsWrapper,
+    Variables.ERROR_FETCH_MESSAGE
+  );
 
-const users = await fetchUsers(
-  Variables.USERS_URL,
-  Variables.cardsWrapper,
-  Variables.ERROR_FETCH_MESSAGE
-);
-
-users.forEach((user: { age: number }) => {
-  if (user.age > 18 && user.age <= 25) {
-    Variables.usersAgeBetween18and25.push(user);
-  } else if (user.age > 25 && user.age < 50) {
-    Variables.usersAgeBetween35and50.push(user);
-  }
-});
-
-makeUserCards(users, Variables.cardsWrapper, getSample);
-
-Variables.searchInput.addEventListener("input", function () {
-  const inputText: string = this.value;
-
-  if (inputText) {
-    if (Number(this.value) > 0) {
-      let inputID: number = Number(this.value);
-
-      const filteredUsers = users.filter(
-        (user: { id: number }) => user.id === inputID
-      );
-
-      getSearchResult(filteredUsers);
-    } else {
-      const inputText: string = this.value.toLocaleLowerCase();
-
-      const filteredUsers = users.filter((user: { username: string }) =>
-        user.username.toLowerCase().match(inputText)
-      );
-
-      getSearchResult(filteredUsers);
+  users.forEach((user: { age: number }) => {
+    if (user.age > 18 && user.age <= 25) {
+      Variables.usersAgeBetween18and25.push(user);
+    } else if (user.age > 25 && user.age < 50) {
+      Variables.usersAgeBetween35and50.push(user);
     }
-  } else makeUserCards(users, Variables.cardsWrapper, getSample);
-});
+  });
+
+  makeUserCards(users, Variables.cardsWrapper, getSample);
+
+  Variables.searchInput.addEventListener("input", function () {
+    const inputText: string = this.value;
+
+    if (inputText) {
+      if (Number(this.value) > 0) {
+        let inputID: number = Number(this.value);
+
+        const filteredUsers = users.filter(
+          (user: { id: number }) => user.id === inputID
+        );
+
+        getSearchResult(filteredUsers);
+      } else {
+        const inputText: string = this.value.toLocaleLowerCase();
+
+        const filteredUsers = users.filter((user: { username: string }) =>
+          user.username.toLowerCase().match(inputText)
+        );
+
+        getSearchResult(filteredUsers);
+      }
+    } else makeUserCards(users, Variables.cardsWrapper, getSample);
+  });
+})();
